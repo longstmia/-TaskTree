@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
 import styled from "styled-components";
 import { taskStore, Task } from "../store/taskStore";
@@ -17,12 +17,45 @@ const SubTaskList = styled.div`
   margin-left: 20px;
 `;
 
+const ToggleButton = styled.button`
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #71b7e6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ff5945;
+  }
+`;
+
+const AddSubTaskButton = styled.button`
+  margin-left: 10px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #218838;
+  }
+`;
+
 interface TaskTreeProps {
   task: Task;
   level: number;
 }
 
 export const TaskTree: React.FC<TaskTreeProps> = observer(({ task, level }) => {
+  const [isExpanded, setIsExpanded] = useState(false); // Состояние для раскрытия/сворачивания подзадач
+
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
     taskStore.toggleTask(task, isChecked);
@@ -35,6 +68,17 @@ export const TaskTree: React.FC<TaskTreeProps> = observer(({ task, level }) => {
     }
   };
 
+  const toggleSubTasks = () => {
+    setIsExpanded(!isExpanded); // Переключаем состояние раскрытия подзадач
+  };
+
+  const handleAddSubTask = () => {
+    const subTaskTitle = prompt("Введите название подзадачи:");
+    if (subTaskTitle) {
+      taskStore.addSubTask(task.id, subTaskTitle);
+    }
+  };
+
   return (
     <>
       <TaskContainer level={level}>
@@ -44,8 +88,18 @@ export const TaskTree: React.FC<TaskTreeProps> = observer(({ task, level }) => {
           onChange={handleCheckboxChange}
         />
         <span>{task.title}</span>
+        {task.subTasks.length > 0 && (
+          <ToggleButton onClick={toggleSubTasks}>
+            {isExpanded ? "Свернуть" : "Развернуть"}
+          </ToggleButton>
+        )}
+        <AddSubTaskButton onClick={handleAddSubTask}>
+          Добавить подзадачу
+        </AddSubTaskButton>
       </TaskContainer>
-      {task.subTasks.length > 0 && (
+
+      {/* Если подзадачи развернуты, отображаем их */}
+      {isExpanded && task.subTasks.length > 0 && (
         <SubTaskList>
           {task.subTasks.map((subTask) => (
             <TaskTree key={subTask.id} task={subTask} level={level + 1} />
