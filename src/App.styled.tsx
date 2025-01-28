@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-
-// Основной контейнер с фоном
 export const Container = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -12,7 +10,6 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-// Основной контейнер приложения с белым фоном и тенями
 export const TodoApp = styled.div`
   width: 100%;
   max-width: 1000px;
@@ -24,15 +21,6 @@ export const TodoApp = styled.div`
   overflow: hidden;
 `;
 
-// Заголовок приложения
-export const Title = styled.h2`
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
-`;
-
-// Строка ввода для новой задачи
 export const Row = styled.div`
   display: flex;
   align-items: center;
@@ -43,7 +31,6 @@ export const Row = styled.div`
   padding: 10px;
 `;
 
-// Поле ввода с декоративным padding
 export const Input = styled.input`
   flex: 1;
   border: none;
@@ -58,7 +45,6 @@ export const Input = styled.input`
   }
 `;
 
-// Кнопка для добавления задачи
 export const Button = styled.button`
   border: none;
   outline: none;
@@ -75,31 +61,29 @@ export const Button = styled.button`
   }
 `;
 
-// Контейнер для списка задач
 export const ListContainer = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
 `;
 
-// Стиль для каждой задачи
 export const TaskTreeStyled = styled.li<{ level: number }>`
   background: #fff;
   padding: 15px;
+  margin-bottom: 15px;
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  margin-right: 85px;
 
   &:hover {
     background: #f7f8fa;
   }
 
   &:last-child {
-    gap: 10px;
     margin-bottom: 0;
   }
 `;
