@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 export const TodoApp = styled.div`
   width: 100%;
-  max-width: 1000px;
+  max-width: 1200px;
   background: #fff;
   margin-top: 40px;
   padding: 40px 30px 70px;

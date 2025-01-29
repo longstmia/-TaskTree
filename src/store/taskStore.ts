@@ -40,8 +40,11 @@ export class TaskStore {
   toggleTask(task: Task, isChecked: boolean) {
     task.isChecked = isChecked;
     task.subTasks.forEach((subTask) => this.toggleTask(subTask, isChecked));
-    const parentTask = this.findParentTask(task.id);
-    if (parentTask) this.updateParentTaskStatus(parentTask);
+    let parentTask = this.findParentTask(task.id);
+    while (parentTask) {
+      this.updateParentTaskStatus(parentTask);
+      parentTask = this.findParentTask(parentTask.id);
+    }
   }
 
   updateParentTaskStatus(parentTask: Task) {

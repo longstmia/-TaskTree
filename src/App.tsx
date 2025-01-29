@@ -9,7 +9,8 @@ import {
   Input,
   Button,
   ListContainer,
-  TaskTreeStyled,} from "./App.styled";
+  TaskTreeStyled,
+} from "./App.styled";
 
 export const App: React.FC = observer(() => {
   const [taskInput, setTaskInput] = useState("");
